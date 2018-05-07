@@ -1,7 +1,7 @@
 ### VI - Big O
 * Big O describes upper bound on time.
 * Big Omega is the equivalent concept but for a lower bound.
-* Big Theta means bot O and Omega. Of an algorithm is Theta(N) then it is both O(N) and Omega(N). Theta gives a tight bound on run time.
+* Big Theta means big O and Omega. If an algorithm is Theta(N) then it is both O(N) and Omega(N). Theta gives a tight bound on run time.
 
 Big O is what is traditionally used in industry, and it tries to use it to offer the tightest description of run time.  We rarely discuss best case time complexity. For many algorithms, the worst case and the expected case are the same.
 
@@ -51,7 +51,7 @@ for(int a: arrA){
   }
 }
 ```
-Here we do B chinks of work for each element in A. Therefor, the total work is O(A*B).
+Here we do B chunks of work for each element in A. Therefor, the total work is O(A*B).
 
 Basically,
 * If algorithm is in the form of "do this, then, when you're all done, do that" you add runtimes.
@@ -59,12 +59,13 @@ Basically,
 
 * Amortized time allows us to describe that yes, this worst case happens every once in a while. But once it happens, it wont happen again for so long the cost is "amortized". Example was an arrayList that doubles in size when it needs to dynamically allocate more space.  
 
-* Log N runtimes
+##### Log N runtimes
+
 Consider binary search. We start with an N-element array to search. Then, after the first step we have N/2 elements. Then N/4...we stop when we find the value or we are down to 1 element. The total runtime is then a matter of how many steps we can take until N becomes 1. This ends up being how many times can be multiply by 2(starting with 1) until we get N. Thus, `2^k = N` and `N = Log(N)`
 
 Important takeaway: when you see a problem where the number of elements in the problem space gets halved in each, that will likely be a O(log N) runtime.
 
-* Recursive Runtimes
+##### Recursive Runtimes
 ```
 int f(int n){
   if (n <= 1) {
@@ -73,7 +74,7 @@ int f(int n){
   return f(n-1) + f(n - 1);
 }
 ```
-Common incorrect answer here after seeing two calls of F is O(n^2). This is wrong. We can derive the runtime by walking through the code, with f(4). This calls f(3) twice, and each of those calls to f(3) call f(2) twice, until we get to f(1)
+Common incorrect answer here after seeing two calls of F is O(n^2). This is wrong. We can derive the runtime by walking through the code, with f(4). This calls f(3) twice, and each of those calls to f(3) call f(2) twice, until we get to f(1):
 ```
                     f(4)
               f(3)            f(3)
@@ -82,4 +83,98 @@ Common incorrect answer here after seeing two calls of F is O(n^2). This is wron
 ```
 How many calls are in this tree? Well, the tree will have depth N. Each node has two children, so each level will have twice as many calls as the one above it. This tells us at Level 0, we have 1 node. At level 1, we have 2, 2 we get 4, 3 is 8...This also works out to 2^0, 2^1 2^2, 2^3...Therefore, there will be 2^0 + 2^1 + 2^2 + ... + 2^N
 
-Important takeaway: When you ahve a recurisve function taht makes multiple calls, the runtime will often (but not always) look like O(branches^depth), where branches it the number of times each recursive call branches. In this case, we get O(2^N).
+Important takeaway: When you have a recursive function that makes multiple calls, the runtime will often (but not always) look like O(branches^depth), where branches it the number of times each recursive call branches. In this case, we get O(2^N).
+
+#### Practice
+```
+void foo(int[] array){
+  int sum = 0;
+  int product = 1;
+  for (int i = 0; i < array.length; i++){
+    sum += array[i];
+  }
+  for(int i = 0; i < array.length; i++){
+    product *= array[i];
+  }
+  System.out.println(sum + ", " + product);
+}
+```
+This will take O(n). The fact that we iterate twice does not matter(we exclude constants).
+
+```
+void printPairs(int[] array){
+  for(int i = 0; i < array.length; i++){
+    for(int j = 0; j < array.length; j++){
+      System.out.println(array[i] + "," array[j]);
+    }
+  }
+}
+```
+The inner loop has O(N) iterations and is called N times. Therefore, runtime is O(N^2).
+
+```
+void printUnorderedPairs(int[] array){
+  for(int i = 0; i < array.length; i++){
+    for(int j = i + 1; j < array.length; j++){
+      System.out.println(array[i] + "," + array[j]);
+    }
+  }
+}
+```
+First loop through j runs N-1, then N-2, then N-3 + ... + 2 + 1
+= 1 + 2 + 3 + ... + N-1
+== sum of 1 through N - 1
+=== The sum of 1 through N - 1 is (N(N-1)) / 2
+==== (N^2 - n) / 2 == O(N^2) <-- Notice we get rid of constant(1/2) as well as non major term(n).
+We can also think about what this code does. there are N^2 total pairs, and roughly half of those will have i < j and the other half will have i > j. This code will go through N^2/2 pairs, so O(n^2).
+We can also think about the problem in another way, the average work. The outer loop runs N times. The inner loop, however, varies by iteration. Lets think about the average iteration. For 1,2,3..N, the average is N/2. Therefore, since the inner loop does N/2 work on average, and the outer loop is run N times, the total work is (n^2)/2 = O(n^2).
+
+```
+void printUnorderedPairs(int[] arrayA, int[] arrayB){
+  for(int i = 0; i < arrayA.length; i++){
+    for(int j = 0; j < arrayB.length; j++){
+      if(arrayA[i] < arrayB[j]){
+        System.out.println(arrayA[i] + "," + arrayB[j]);
+      }
+    }
+  }
+}
+```
+We can break this up to analyze. The if statement is O(1) since its a sequence of constant time statements. For each element of arrayA, the inner loop goes though b iterations, where b = arrayB.length. If a = arrayA.length, then the runtime is O(ab). Note that this is NOT O(n^2) because there are two different inputs. Both matter.
+
+```
+void printUnorderedPairs(int[] arrayA, int[] arrayB){
+  for(int i = 0; i < arrayA.length; i++){
+    for(int j = 0; j < arrayB.length; j++){
+      for(int k = 0; k < 100000; k++){
+        System.out.println(arrayA[i] + "," + arrayB[j]);
+      }
+    }
+  }
+}
+```
+Nothing here has really changed from above. 100,000 units of work is still constant time, and we care only about how operations rate of increase. We still have O(ab).
+
+```
+void reverse(int[] array){
+  for(int i = 0; i < array.length / 2; i++){
+    int other = array.length - i - 1;
+    int temp = array[i];
+    array[i] = array[other];
+    array[other] = temp;
+  }
+}
+```
+This reversal algorithm runs in O(N) time. The fact that it only goes though half of the array does not impact big O time, because its a constant(N/2) = O(N).
+
+```
+Which of the following are equivalent to O(N)? Why?
+* O(N + P), where P < N/2
+* O(2N)
+* O(N + log N)
+* O(N+M)
+```
+1. Yes -- if P < N/2, we know that N is the dominant term so we can drop the O(P). Really O(N)
+2. Yes -- we don't care about constants. Really O(N)
+3. Yes -- only significant term matters. Really O(N)
+4. No -- there is no established relationship between N and M, so we must keep both variables here.

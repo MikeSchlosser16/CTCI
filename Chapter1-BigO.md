@@ -178,3 +178,57 @@ Which of the following are equivalent to O(N)? Why?
 2. Yes -- we don't care about constants. Really O(N)
 3. Yes -- only significant term matters. Really O(N)
 4. No -- there is no established relationship between N and M, so we must keep both variables here.
+
+Suppose we had an algorithm that took an array of strings, sorted each string and thens orted the full array. What would the runtime be?
+
+* Many people would say sorting each string is O(N log N) and we do this for each string, so thats O(N * N log N). Then we have to sort this array, so that is an additional O(NLogN), and therefore the total work is O(N^2 Log N + N Log N), which is just O(N^2 Log N) This is INCORRECT. Why? Because we used N in two different ways. In one case, its the length of the string, and in the other case its the length of the array. You can prevent this problem by not using N at all, or by using it only where there is no ambiguity as to what N could represent.
+Really, we have
+```
+S = length of the longest string
+A = Length of the array
+
+1. Sort each individual string --> O(S log S)
+2. Do this for a strings --> O(A*S log S)
+3. Sort all of the strings --> O(A log A)
+4. Compare each string, O(S) making 3 --> O(A * S log A)
+== O(A*S log S + A*S log A)
+=== O(A*S(log S + log A))
+```
+Important takeaway: Be careful when giving names to variables. It is very easy to forget which ais which and mix them up. Give them representative names if needed.
+
+```
+int sum(Node node){
+  if(node == null){
+    return 0;
+  }
+  return sum(node.left) + node.value + sum(node.right);
+}
+```
+
+Just because there is a binary search tree does NOT mean there is a log! We can look at this two ways. What it means, the code touches each node in the tree once and does a constant time amount of work with the touch, therefore the runtime will be linear in terms of the number of nodes. If there are N nodes, we have O(N). We also could use the above algorithm, where typically in recursion we get O(branches ^ depth). There are two branches, so we are looking at O(d^depth)). At this point we may assume we did something wrong, but what is depth? If N is the number of nodes in the tree, the depth is roughly log(N). This gives us O(2^LogN). Recalling what log means, 2^p = Q -> logbase2 Q = P, so we have P = 2 ^ log N == logbase2P = logbase2N P = N, and subbing back in 2^LogN = N. Therefore, the runtime is O(N).
+
+```
+boolean isPrime(int n){
+  for(int x = 2; x * x <= n; x++){
+    if(n % x == 0){
+      retun false;
+    }
+  }
+  return true;
+}
+```
+
+The inside work is constant, so we just need to determine how many iterations the for loop does in the worst case. The loop starts when x = 2 and stops when x*x = n. In other words, it stops when N = X^2, so when x = sqrt(N). We could rewrite it as ```for(int x = 2; x <= sqrt(n); x++)```. Thus, this runs in O(sqrt(N)) time.
+
+```
+int factorial(int n){
+  if(n < 0){
+    return -1;
+  } else if (n == 0){
+    return 1;
+  } else {
+    return n * factorial(n-1);
+  }
+}
+```
+This is just a straight recursion from n to n-1 to n-2...1, so it will take O(n) time.

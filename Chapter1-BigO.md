@@ -179,10 +179,11 @@ Which of the following are equivalent to O(N)? Why?
 3. Yes -- only significant term matters. Really O(N)
 4. No -- there is no established relationship between N and M, so we must keep both variables here.
 
-Suppose we had an algorithm that took an array of strings, sorted each string and thens orted the full array. What would the runtime be?
+Suppose we had an algorithm that took an array of strings, sorted each string and then sorted the full array. What would the runtime be?
 
 * Many people would say sorting each string is O(N log N) and we do this for each string, so thats O(N * N log N). Then we have to sort this array, so that is an additional O(NLogN), and therefore the total work is O(N^2 Log N + N Log N), which is just O(N^2 Log N) This is INCORRECT. Why? Because we used N in two different ways. In one case, its the length of the string, and in the other case its the length of the array. You can prevent this problem by not using N at all, or by using it only where there is no ambiguity as to what N could represent.
 Really, we have
+
 ```
 S = length of the longest string
 A = Length of the array
@@ -194,7 +195,7 @@ A = Length of the array
 == O(A*S log S + A*S log A)
 === O(A*S(log S + log A))
 ```
-Important takeaway: Be careful when giving names to variables. It is very easy to forget which ais which and mix them up. Give them representative names if needed.
+Important takeaway: Be careful when giving names to variables. It is very easy to forget which is which and mix them up. Give them representative names if needed.
 
 ```
 int sum(Node node){
@@ -231,4 +232,40 @@ int factorial(int n){
   }
 }
 ```
-This is just a straight recursion from n to n-1 to n-2...1, so it will take O(n) time.
+This is just a straight recursion from n to n-1 to n-2...1, so it will take O(n) time. The function is called recursively n times.
+
+```
+# Counts all permutations in a string
+void permutation(String str){
+  permutation(str, "");
+}
+
+void permutation(String str, String prefix){
+  if(str.length() == 0){
+    System.out.println(prefix);
+  } else {
+    for(int i = 0; i < str.length(); i++){
+      String rem = str.substring(0,i) + str.substring(i+1);
+      permutation(rem, prefix + str.charAt(i));
+    }
+  }
+}
+```
+
+This one is tricky. We can think about how many times permutation gets called and how long each call takes. For base case, to generate a permutation, we need to pick characters for each slot. Suppose we had 7 characters in the string. For the first slot we have 7 choices, then 6, 5 ..., which can be expressed as 7!. That tells us there are n! permutations. How many times does each permutation get called before the base case? Picture a large call tree for lines 247-250. There are n! leaves, from above, each leaf is attached to a path of legnth n. Therefore, there will be no more than n * n! calls.  Therefore permutation is called n~ times. Each function call takes O(n) on line 240, O(n) on 248 and 249 combined. So what is the total runtime? We are calling permutation O(n * n!) times, and each one takes O(n) time, so total runtime will not exceed O(n^2 * n!).
+
+```
+int fib(int n){
+  if(n <= 0) return 0;
+  else if (n == 1) return 1;
+  return fib(n - 1) + fib(n - 2);
+}
+```
+
+Using the earlier pattern for recursive calls, O(branches^depth) we get O(2^n).
+
+Important takeaway: generally speaking, when you see an algorithm with multiple recusrive calls, you're looking at exponential runtime.
+
+* The number of times we can divide n by 2 until we get 1 is O(log n)
+
+More examples at bottom of page for periodic review. 

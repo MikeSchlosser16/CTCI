@@ -55,20 +55,15 @@ public class Stack<T> {
         return size;
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-
     // Of course we can just use stackArrayList.toString()
     @Override
     public String toString(){
         String stackRepresentation = "[";
         for(int i = 0; i < size; i++){
-            if(i <= size){
+            if(i <= size - 2){
                 stackRepresentation += stackArrayList.get(i).toString() + ", ";
             } else {
-                stackRepresentation += stackArrayList.get(i) + " ]";
+                stackRepresentation += stackArrayList.get(i) + "]";
             }
         }
         return stackRepresentation;

@@ -4,6 +4,7 @@ public class StackTester {
         testStackInt.push(3);
         testStackInt.push(9);
         testStackInt.push(-3);
+        System.out.println("Initial stack: " + testStackInt.toString());
         System.out.println("Peeking at stack: " + testStackInt.peek());
         System.out.println("Popping off stack: " + testStackInt.pop());
         System.out.println("New length of stack: " + testStackInt.getSize());
@@ -17,7 +18,7 @@ public class StackTester {
         System.out.println("Popping off stack: " + testStackString.pop());
         System.out.println("Popping off stack: " + testStackString.pop());
         System.out.println("Stack is empty: " + testStackString.isEmpty());
-       // System.out.println("Popping off stack: " + testStackString.pop()); // Throws EmptyStackException
+       // System.out.println("Popping off stack: " + testStackString.dequeue()); // Throws EmptyStackException
 
 
     }

@@ -9,11 +9,11 @@ public class QueueTester {
         queueInt.enqueue(16);
         System.out.println("Size: " + queueInt.getSize());
         System.out.println("Initial Queue: " + queueInt.toString());
-        System.out.println("Popping queue: " + queueInt.dequeue()); // 3 -- FIFO
+        System.out.println("Dequeue: " + queueInt.dequeue()); // 3 -- FIFO
         System.out.println("New Queue Size: " + queueInt.getSize());
         System.out.println("New Queue: " + queueInt.toString());
-        System.out.println("Popping queue: " + queueInt.dequeue()); // 11 -- FIFO
-        System.out.println("Peek: " + queueInt.peek());
+        System.out.println("Dequeue: " + queueInt.dequeue()); // 11 -- FIFO
+        System.out.println("Peek: " + queueInt.peek()); // 16
         queueInt.dequeue();
         System.out.println(queueInt.isEmpty());
     }

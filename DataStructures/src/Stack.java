@@ -1,8 +1,70 @@
 import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.NoSuchElementException;
 
 // Stack is LIFO -- this could be implemented with many other structures, such as primitive array, Node, LinkedList etc.
+// Push, pop, peek, getSize, isEmpty all take constant time O(1)
 public class Stack<T> {
+
+    private class Node{
+        Node next;
+        T value;
+    }
+
+    Node first;
+    Integer size;
+
+    Stack(){
+        size = 0;
+        first = null;
+    }
+
+    public Boolean isEmpty(){
+        return first == null;
+    }
+
+    public Integer getSize(){
+        return size;
+    }
+
+    // First always keeps track of the next item to pop off the stack
+    public void push(T item){
+      Node oldFirst = first;
+      first = new Node();
+      first.next = oldFirst;
+      first.value = item;
+      size++;
+    }
+
+    public T pop(){
+        if(isEmpty()) throw new NoSuchElementException("Stack is empty.");
+        T item = first.value;
+        first = first.next;
+        size--;
+        return item;
+    }
+
+    public T peek(){
+        if(isEmpty()) throw new NoSuchElementException("Stack is empty.");
+        return first.value;
+    }
+
+    public String toString(){
+        Node node = first;
+        String val = "[(MOST RECENT)";
+        while(node != null){
+            val += node.value + " ";
+            node = node.next;
+        }
+        return val + "(OLDEST)]";
+    }
+
+}
+
+
+
+
+/*public class Stack<T> {
 
     private ArrayList<T> stackArrayList;
     private int size;
@@ -68,4 +130,4 @@ public class Stack<T> {
         }
         return stackRepresentation;
     }
-}
+}*/

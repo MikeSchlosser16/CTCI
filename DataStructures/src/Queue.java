@@ -15,7 +15,7 @@ public class Queue<T> {
         Node next;
     }
 
-    int size;
+    Integer size;
     Node first;
     Node last;
 
@@ -29,7 +29,7 @@ public class Queue<T> {
         return first == null;
     }
 
-    public int getSize(){
+    public Integer getSize(){
         return size;
     }
 

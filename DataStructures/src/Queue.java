@@ -6,8 +6,6 @@ import java.util.NoSuchElementException;
 
 // Queue is FIFO
 // The enqueue, dequeue, peek, getSize and isEmpty() all take constant time in the worst case
-
-
 public class Queue<T> {
 
     private class Node{
@@ -33,28 +31,39 @@ public class Queue<T> {
         return size;
     }
 
-    public T peek(){
-        if(isEmpty()) throw new NoSuchElementException("Queue is empty.");
-        return first.value;
-    }
-
+    //Enqueue puts item at the end of the queue
     public void enqueue(T item){
         Node oldLast = last;
         last = new Node();
         last.value = item;
         last.next = null;
-        if(isEmpty()) first = last;
-        else oldLast.next = last;
+        if(isEmpty()){
+            first = last;
+        } else {
+            oldLast.next = last;
+        }
         size++;
     }
 
+    // Get first item
     public T dequeue(){
-        if(isEmpty()) throw new NoSuchElementException("Queue is empty.");
+        if(isEmpty()){
+            throw new NoSuchElementException("Queue is empty.");
+        }
         T item = first.value;
         first = first.next;
         size--;
-        if(isEmpty()) last = null; // to avoid loitering
+        if(isEmpty()){
+            last = null; // to avoid loitering
+        }
         return item;
+    }
+
+    public T peek(){
+        if(isEmpty()){
+            throw new NoSuchElementException("Queue is empty.");
+        }
+        return first.value;
     }
 
     public String toString(){

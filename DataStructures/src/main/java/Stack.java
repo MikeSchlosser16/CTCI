@@ -6,6 +6,9 @@ import java.util.NoSuchElementException;
 // Push, pop, peek, getSize, isEmpty all take constant time O(1)
 public class Stack<T> {
 
+    public static void main(String[] args){
+        System.out.println("hi");
+    }
     private class Node{
         T value;
         Node next;

@@ -1,8 +1,8 @@
-import java.util.ArrayList;
-import java.util.EmptyStackException;
+package Structures;
+
 import java.util.NoSuchElementException;
 
-// Stack is LIFO
+// Structures.Stack is LIFO
 // Push, pop, peek, getSize, isEmpty all take constant time O(1)
 public class Stack<T> {
 
@@ -30,7 +30,7 @@ public class Stack<T> {
         return size;
     }
 
-    // First always keeps track of the next item to pop off the stack, the top of the Stack
+    // First always keeps track of the next item to pop off the stack, the top of the Structures.Stack
     public void push(T item){
       Node oldFirst = first;
       first = new Node();
@@ -41,7 +41,7 @@ public class Stack<T> {
 
     public T pop(){
         if(isEmpty()){
-            throw new NoSuchElementException("Stack is empty.");
+            throw new NoSuchElementException("Structures.Stack is empty.");
         }
         T item = first.value;
         first = first.next;
@@ -51,7 +51,7 @@ public class Stack<T> {
 
     public T peek(){
         if(isEmpty()){
-            throw new NoSuchElementException("Stack is empty.");
+            throw new NoSuchElementException("Structures.Stack is empty.");
         }
         return first.value;
     }
@@ -71,12 +71,12 @@ public class Stack<T> {
 
 
 
-/*public class Stack<T> {
+/*public class Structures.Stack<T> {
 
     private ArrayList<T> stackArrayList;
     private int size;
 
-    public Stack(){
+    public Structures.Stack(){
         stackArrayList = new ArrayList<T>();
         size = 0;
     }

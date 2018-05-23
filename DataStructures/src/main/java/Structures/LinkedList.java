@@ -19,9 +19,28 @@ public class LinkedList<T> {
     }
 
     Node head = null;
+    int size;
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public T get(int index){
+        if(head == null) throw new IllegalAccessError("LinkedList is empty.");
+        Node<T> temp = head;
+        for(int i = 0; i < index; i++){
+            temp = head.next;
+        }
+        return temp.data;
+    }
 
     public void addFirst(T item){
         head = new Node<>(item, head);
+        size++;
     }
 
     public void addLast(T item){
@@ -34,6 +53,7 @@ public class LinkedList<T> {
                 temp = temp.next;
             }
             temp.next = new Node<T>(item, null);
+            size++;
         }
     }
 
@@ -43,6 +63,7 @@ public class LinkedList<T> {
             temp = temp.next;
         }
         temp.next = new Node<T>(item, null);
+        size++;
     }
 
     public void insertBefore(T key, T item){
@@ -62,6 +83,7 @@ public class LinkedList<T> {
         if(current != null){
             previous.next = new Node<T>(item, current);
         }
+        size++;
     }
 
     public void remove(T item){
@@ -82,6 +104,7 @@ public class LinkedList<T> {
             throw new IllegalArgumentException("Cannot delete null");
         }
         previous.next = current.next;
+        size--;
     }
 
     public LinkedList<T> reverse(){

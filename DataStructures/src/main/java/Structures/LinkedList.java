@@ -33,7 +33,7 @@ public class LinkedList<T> {
         if(head == null) throw new IllegalAccessError("LinkedList is empty.");
         Node<T> temp = head;
         for(int i = 0; i < index; i++){
-            temp = head.next;
+            temp = temp.next;
         }
         return temp.data;
     }
@@ -48,6 +48,7 @@ public class LinkedList<T> {
             addFirst(item);
         } else {
             Node<T> temp = head;
+            Node prev = null;
             // Start with the head and access each node until we reach null, the last node
             while(temp.next != null){
                 temp = temp.next;
@@ -58,11 +59,16 @@ public class LinkedList<T> {
     }
 
     public void insertAfter(T key, T item){
+        if(head == null){
+            throw new IllegalArgumentException("Linked list empty. Cant insert after");
+        }
         Node temp = head;
-        while(temp.next != null && !temp.data.equals(key)){
+        while(temp != null && !temp.data.equals(key)){
             temp = temp.next;
         }
-        temp.next = new Node<T>(item, null);
+        if(temp != null) {
+            temp.next = new Node<T>(item, temp.next);
+        }
         size++;
     }
 
@@ -73,10 +79,11 @@ public class LinkedList<T> {
         if(head.data.equals(key)){
             //head = new Node<T>(item, head);
             addFirst(item);
+            return;
         }
         Node current = head;
         Node previous = null;
-        while(current.next != null && !current.data.equals(key)){
+        while(current != null && !current.data.equals(key)){
             previous = current;
             current = current.next;
         }
@@ -111,7 +118,7 @@ public class LinkedList<T> {
         LinkedList<T> list = new LinkedList<T>();
         Node<T> temp = head;
         while(temp != null){
-            addFirst(temp.data); // Always just add first, has effect of reversing list
+            list.addFirst(temp.data); // Always just add first, has effect of reversing list
             temp = temp.next;
         }
         return list;

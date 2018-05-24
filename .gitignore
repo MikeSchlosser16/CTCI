@@ -2,6 +2,6 @@
 .idea/
 out/
 .gitignore
-DataStructures/.gradle/
-DataStructures/build/
-DataStructures/src/.gradle/
+DataStructures/.gradle/*
+DataStructures/build/*
+DataStructures/src/.gradle/*

@@ -177,9 +177,4 @@ public class LinkedList<T> {
             return value;
         }
     }
-
-
-
-
-
 }

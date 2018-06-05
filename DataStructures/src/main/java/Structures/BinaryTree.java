@@ -21,21 +21,61 @@ package Structures;
 //BST
 public class BinaryTree {
 
-    TreeNode root;
+    public TreeNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TreeNode root) {
+        this.root = root;
+    }
+
+    private TreeNode root;
 
     public BinaryTree(){
         root = null;
     }
 
     private static class TreeNode {
+
+        public Integer getItem() {
+            return item;
+        }
+
+        public void setItem(Integer item) {
+            this.item = item;
+        }
+
         Integer item;
+
+        public TreeNode getLeft() {
+            return left;
+        }
+
+        public void setLeft(TreeNode left) {
+            this.left = left;
+        }
+
         TreeNode left;
+
+        public TreeNode getRight() {
+            return right;
+        }
+
+        public void setRight(TreeNode right) {
+            this.right = right;
+        }
+
         TreeNode right;
 
         public TreeNode(Integer item, TreeNode left, TreeNode right){
             this.item = item;
             this.left = left;
             this.right = right;
+        }
+        public TreeNode(Integer item){
+            this.item = item;
+            this.right = null;
+            this.left = null;
         }
     }
 
@@ -60,19 +100,19 @@ public class BinaryTree {
     }
 
     public void insert(Integer item){
-        insert(root, item);
+        root = insert(root, item);
     }
 
-    private void insert(TreeNode node, Integer item){
-        if(root == null){
-            root = new TreeNode(item, null, null);
-        } else{
-            if(item <= node.item){
-                insert(node.left, item);
-            } else {
-                insert(node.right, item);
-            }
+
+    private TreeNode insert(TreeNode root, Integer item){
+        if(root == null) {
+            root = new TreeNode(item);
+            return root;
         }
+        if(item < root.item) root.left = insert(root.left, item);
+        else root.right = insert(root.right, item);
+
+        return root;
     }
 
     public TreeNode delete(Integer item){

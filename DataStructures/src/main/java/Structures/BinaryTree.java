@@ -106,7 +106,7 @@ public class BinaryTree {
 
     private TreeNode insert(TreeNode root, Integer item){
         if(root == null) {
-            root = new TreeNode(item);
+            root = new TreeNode(item, null, null);
             return root;
         }
         if(item < root.item) root.left = insert(root.left, item);
@@ -197,8 +197,8 @@ public class BinaryTree {
     }
 
     private Integer minValue(TreeNode node){
-        if(root.left == null) {
-            return root.item;
+        if(node.left == null) {
+            return node.item;
         } else {
             return minValue(node.left);
         }
@@ -209,16 +209,12 @@ public class BinaryTree {
     }
 
     private Integer maxValue(TreeNode node){
-        if(root.right == null) {
-            return root.item;
+        if(node.right == null) {
+            return node.item;
         } else {
             return maxValue(node.right);
         }
     }
-
-
-
-
     /*
     If the tree is non-empty, then it consists of a root and two subtrees. Print the item in the root and use
       recursion to print the items in the subtrees. This prints all the items on one line of output
@@ -229,29 +225,37 @@ public class BinaryTree {
       -- And in an inorder traversal, the left subtree is traversed first, then the root node is processed, then the
             right subtree is traversed
       */
-    static void preorderPrint(TreeNode root){
-        if(root != null){
-            System.out.println(root.item + " ");
-            preorderPrint(root.left);
-            preorderPrint(root.right);
+
+
+    static String preOrder(TreeNode root){
+        String displayNodes = "";
+        if (root != null) {
+            displayNodes = displayNodes + root.getItem() + " ";
+            displayNodes = displayNodes +
+                    preOrder(root.left);
+            displayNodes = displayNodes +
+                    preOrder(root.right);
         }
+        return displayNodes;
     }
 
-    static void inorderPrint(TreeNode root){
+    static String inOrder(TreeNode root){
+        String displayNodes = "";
         if(root != null){
-            preorderPrint(root.left);
-            System.out.println(root.item + " ");
-            preorderPrint(root.right);
+            displayNodes = displayNodes + inOrder(root.left);
+            displayNodes += root.item + " ";
+            displayNodes = displayNodes + inOrder(root.right);
         }
+        return displayNodes;
     }
 
-    static void postorderPrint(TreeNode root){
+    static String postOrder(TreeNode root){
+        String displayNodes = "";
         if(root != null){
-            preorderPrint(root.left);
-            preorderPrint(root.right);
-            System.out.println(root.item + " ");
+            displayNodes += postOrder(root.left);
+            displayNodes += postOrder(root.right);
+            displayNodes += root.item + " ";
         }
+        return displayNodes;
     }
-
-
 }

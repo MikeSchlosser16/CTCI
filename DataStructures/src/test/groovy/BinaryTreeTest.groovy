@@ -40,7 +40,64 @@ class BinaryTreeTest extends Specification {
     }
 
     @spock.lang.Ignore
-    def "Test delete"(){
+    def "Test delete no children -- Replace node with null in its parent node"(){
+        given:
+        BinaryTree binaryTree = new BinaryTree();
+        binaryTree.insert(60)
+        binaryTree.insert(20)
+        binaryTree.insert(70)
+        binaryTree.insert(10)
+        binaryTree.insert(40)
+        binaryTree.insert(30)
+        binaryTree.insert(50)
+
+        /*
+                60
+              /   \
+             20   70
+            /  \
+           10   40
+                / \
+               30 50
+         */
+        when:
+        binaryTree.delete(10)
+        then:
+        println(BinaryTree.preOrder(binaryTree.getRoot()))
+        binaryTree.size() == 6
+        binaryTree.getRoot().getLeft().getLeft() == null
+        !binaryTree.lookup(10)
+    }
+
+    def "Test delete 2 children -- tree reorganization"(){
+        given:
+        BinaryTree binaryTree = new BinaryTree();
+        binaryTree.insert(60)
+        binaryTree.insert(20)
+        binaryTree.insert(70)
+        binaryTree.insert(10)
+        binaryTree.insert(40)
+        binaryTree.insert(30)
+        binaryTree.insert(50)
+
+        /*
+                60
+              /   \
+             20   70
+            /  \
+           10   40
+                / \
+               30 50
+         */
+        when:
+        binaryTree.delete(20)
+        then:
+        println(BinaryTree.preOrder(binaryTree.getRoot()))
+        binaryTree.size() == 6
+        !binaryTree.lookup(20)
+    }
+
+    def "Test delete 1 child -- in the parent node, we replace this node with its only child"(){
         given:
         BinaryTree binaryTree = new BinaryTree();
         binaryTree.insert(60)
@@ -69,6 +126,8 @@ class BinaryTreeTest extends Specification {
         !binaryTree.lookup(70)
         binaryTree.maxValue() == 60
     }
+
+
 
     def "Test findSmallestValue"(){
         given:

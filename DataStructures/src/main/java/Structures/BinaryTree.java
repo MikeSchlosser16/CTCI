@@ -227,7 +227,7 @@ public class BinaryTree {
       */
 
 
-    static String preOrder(TreeNode root){
+    public static String preOrder(TreeNode root){
         String displayNodes = "";
         if (root != null) {
             displayNodes = displayNodes + root.getItem() + " ";
@@ -239,7 +239,7 @@ public class BinaryTree {
         return displayNodes;
     }
 
-    static String inOrder(TreeNode root){
+    public static String inOrder(TreeNode root){
         String displayNodes = "";
         if(root != null){
             displayNodes = displayNodes + inOrder(root.left);
@@ -249,7 +249,7 @@ public class BinaryTree {
         return displayNodes;
     }
 
-    static String postOrder(TreeNode root){
+    public static String postOrder(TreeNode root){
         String displayNodes = "";
         if(root != null){
             displayNodes += postOrder(root.left);

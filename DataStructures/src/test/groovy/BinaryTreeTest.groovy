@@ -39,8 +39,35 @@ class BinaryTreeTest extends Specification {
         !binaryTree.lookup(2)
     }
 
+    @spock.lang.Ignore
     def "Test delete"(){
+        given:
+        BinaryTree binaryTree = new BinaryTree();
+        binaryTree.insert(60)
+        binaryTree.insert(20)
+        binaryTree.insert(70)
+        binaryTree.insert(10)
+        binaryTree.insert(40)
+        binaryTree.insert(30)
+        binaryTree.insert(50)
 
+        /*
+                60
+              /   \
+             20   70
+            /  \
+           10   40
+                / \
+               30 50
+         */
+        when:
+        binaryTree.delete(70)
+        then:
+        println(BinaryTree.preOrder(binaryTree.getRoot()))
+        binaryTree.size() == 6
+        binaryTree.getRoot().getRight() == null
+        !binaryTree.lookup(70)
+        binaryTree.maxValue() == 60
     }
 
     def "Test findSmallestValue"(){

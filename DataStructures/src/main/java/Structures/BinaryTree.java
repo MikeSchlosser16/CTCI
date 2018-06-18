@@ -119,44 +119,55 @@ public class BinaryTree {
         return delete(root, item);
     }
 
-    private TreeNode delete(TreeNode node, Integer item){
-        if(node == null){
+    private TreeNode delete(TreeNode root, Integer item){
+        if(root == null){
             return null;
         }
 
         // Node to delete found
-        if(item == node.item){
             /* 3 main different cases
                 1. Node has no children(just replace node with null in its parent node)
                 2. Node has exactly one child(in the parent node, we replace this node with its only child)
                 3. A node has two children(requires a tree reorganization)
              */
 
-            // 1
-            if(node.left == null && node.right == null){
-                return null;
-            }
-            // 2
-            if(node.right == null){
-                return node.left;
-            }
-            if(node.left == null){
-                return node.right;
-            }
-            // 3
 
-            // Find node that will replace the deleted node(we'll use smallest node of node to be deletes right subtree)
-            Integer smallestValue = findSmallestValue(node.right);
-            // Assign the smallest value to the node to delete, and then delete it from right subtree
-            node.item = smallestValue;
-            node.right = delete(node.right, smallestValue);
+            if (root == null) return root;
 
-        }
-        if(item < node.item){
-            return delete(node.left, item);
-        } else {
-            return delete(node.right, item);
-        }
+            if (item < root.getItem()) {
+                root.setLeft(delete(root.getLeft(), item));
+            } else if (item > root.getItem()) {
+                root.setRight(delete(root.getRight(), item));
+            } else {
+                // node with no leaf nodes
+                if (root.getLeft() == null && root.getRight() == null) {
+                    System.out.println("deleting " + item);
+                    return null;
+                } else if (root.getLeft() == null) {
+                    // node with one node (no left node)
+                    System.out.println("deleting " + item);
+                    return root.getRight();
+                } else if (root.getRight() == null) {
+                    // node with one node (no right node)
+                    System.out.println("deleting " + item);
+                    return root.getLeft();
+                } else {
+                    /*
+                        2 children nodes
+                        1 - First find the node reference with given value.
+                        2 - Find the minimum/maximum value of the right/left sub tree. (One of them, I am finding min)
+                        3 - Replace the node value with the minimum/maximum value.
+                        4 - Now delete the minimum/maximum value from the nodes right/left sub tree.
+                    */
+
+                    Integer minValue = minValue(root.getRight());
+                    root.setItem(minValue);
+                    root.setRight(delete(root.getRight(), minValue));
+                    System.out.println("deleting " + item);
+                }
+            }
+
+            return root;
     }
 
     private Integer findSmallestValue(TreeNode root){

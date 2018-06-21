@@ -6,61 +6,32 @@ package Structures;
 
 /*
     A graph is a set of vertices and a collection of edges that connect a pair of vertices.
-    We use the names 0 through V-1 for the vertices in a V-vertex graph.
-    Graphs used in many real life applications
-        1. Networks, such as city of telephone network
-        2. Social media, such as Facebook, each person represented as a vertex and each
-            vertex has info such as person id, gender etc.
-    Some terminology:
-        Self-loop: Edge that connects vertex to itself
-        Parallel edges: Two edges are parallel if they connect the same pair of vertices
-        When an edge connects two vertices, we say that the verticies are adjacent to one another and that the edge is incident on both vertices.
-        Degree: The degree of a vertex is the number of edges incident on it(number of edges it touches)
-        Path: Sequence of vertices connected by edges.
-        Simple path: A ppath with no repeated vertices
-        Length of a path: Its number of edges
 
-        Photos here: https://algs4.cs.princeton.edu/41graph/
+        No rules dictating the connection among the nodes. Edges can connect nodes in any way. A tree is also a graph.
+        A graph G is an ordered pair of a set V of vertices and a set E of edges
+            G = (V, E) <--- order matters, so V is first object and E is the second. (a,b) != (b,a)
+            The first object in this def is a SET of vertices and the second a SET of edges
+                Reminder: {a,b} is an unordered pair, so {a,b} == {b,a}
+        An edge is uniquely identified by its two end points. We can write the name of two edges as a pair to represent it.
+        2 Types:
+            1. Directed edge (One way) -- (u,v)
+                World wide web is a directed edge. A unique URL would be a node in graph.
+                We have directed edge if page links to another page. Relationship here not mutual, dont always link back
+                Search engines perform web crawling often. This systematically browses WWW to collect and store data to use in search engines.
+                Web crawling basically web traversal, or visiting all nodes in a graph.
+            2. Undirected (Two way)  -- {u,v} origin and direction not fixed. We would have {{v1,v2}, {v1,v3}...} for nodes {v1,v2,...}
+                Facebook would be undirected, with billions of nodes and undirected because friendship is mutual relationship
+                Think of suggesting friends to users, easy to suggest friends of friends for example
+                Problem here is finding all nodes having length of shortest path from person equal to 2
+            Graph can be both(or mixed -- less common)
+        Weighted graphs
+            Think road network. Roads would be different lengths and to solve problems we need to take length of road into account.
+            In some cases we associated weight with an edge, in this case length of a road.
+            To pick best route from City A to City D, with weights assigned to edges, we can use them to calculate total cost.
+            This could be example of mixed directed and undirected, think one way. We can represent undirected with two way directed edges.
+
 
  */
 public class Graph {
 
-    private final int V;
-    private int E;
-    private Bag<Integer>[] adj;
-
-    // Creates a V-vertex graph with no edges
-    Graph(int V){
-
-    }
-
-    // Read graph from input stream in
-    Graph(In in){
-
-    }
-
-    // Number of vertices
-    int V(){
-
-    }
-
-    // Number of edges
-    int E(){
-
-    }
-
-    // Add edge v-w to this graph
-    void addEdge(int v, int w){
-
-    }
-
-    // Vertices adjacent to v
-    Iterable<Integer> adj(int v){
-
-    }
-
-    // String representaiton of graph
-    public String toString(){
-
-    }
 }
